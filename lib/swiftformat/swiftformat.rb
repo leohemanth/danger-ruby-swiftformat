@@ -36,8 +36,12 @@ module Danger
       errors = []
       output.scan(ERRORS_REGEX) do |match|
         next if match.count < 2
+        file = match[1]
+        if file.starts_with? ENV["WORKING_DIRECTORY"]
+          file[/^#{Regexp.quote(ENV["WORKING_DIRECTORY"])}/]
+        end
         errors << {
-            file: match[1],
+            file: github.html_link(file),
             rules: match[0].split(",").map(&:strip)
         }
       end
