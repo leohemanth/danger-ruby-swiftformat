@@ -37,7 +37,7 @@ module Danger
       output.scan(ERRORS_REGEX) do |match|
         next if match.count < 2
         file = match[1]
-        if file.starts_with? ENV["WORKING_DIRECTORY"]
+        if file.start_with? ENV["WORKING_DIRECTORY"]
           file[/^#{Regexp.quote(ENV["WORKING_DIRECTORY"])}/]
         end
         errors << {
